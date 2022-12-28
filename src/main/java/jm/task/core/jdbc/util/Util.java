@@ -9,9 +9,9 @@ public class Util {
     private Util() {}
 
     private static volatile Util instance;
-    String url = "jdbc:mysql://localhost:3306/database";
-    String user = "root";
-    String password = "123456Qw*";
+    private final String url = "jdbc:mysql://localhost:3306/db";
+    private final String user = "root";
+    private final String password = "123456Qw*";
 
     public static Util getInstance() {
         Util localInstance = instance;

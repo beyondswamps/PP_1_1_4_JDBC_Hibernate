@@ -14,7 +14,13 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void createUsersTable() {
         try (Connection connection = Util.getInstance().getConnection()) {
-            PreparedStatement ps = connection.prepareStatement("CREATE TABLE database.users (id INT NOT NULL AUTO_INCREMENT, name VARCHAR(30) NOT NULL, lastName VARCHAR(30) NOT NULL, age INT, PRIMARY KEY (id)");
+            PreparedStatement ps = connection.prepareStatement(
+                    "CREATE TABLE IF NOT EXISTS users(\n" +
+                    "id INT AUTO_INCREMENT,\n" +
+                    "name VARCHAR(40) NOT NULL,\n" +
+                    "lastName VARCHAR(40) NOT NULL,\n" +
+                    "age INT NOT NULL,\n" +
+                    "PRIMARY KEY (id));\n");
             ps.executeUpdate();
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
@@ -23,7 +29,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void dropUsersTable() {
         try (Connection connection = Util.getInstance().getConnection()) {
-            PreparedStatement ps = connection.prepareStatement("DROP TABLE users");
+            PreparedStatement ps = connection.prepareStatement("DROP TABLE IF EXISTS users");
             ps.executeUpdate();
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
@@ -32,7 +38,8 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void saveUser(String name, String lastName, byte age) {
         try (Connection connection = Util.getInstance().getConnection()) {
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO users (name, lastName, age) values (?, ?, ?)");
+            PreparedStatement ps = connection.prepareStatement(
+                    "INSERT INTO users (name, lastName, age) values (?, ?, ?)");
             ps.setString(1, name);
             ps.setString(2, lastName);
             ps.setInt(3, age);
@@ -44,7 +51,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void removeUserById(long id) {
         try (Connection connection = Util.getInstance().getConnection()) {
-            PreparedStatement ps = connection.prepareStatement("DELETE users WHERE id=?");
+            PreparedStatement ps = connection.prepareStatement("DELETE FROM users WHERE id=?");
             ps.setLong(1, id);
             ps.executeUpdate();
         } catch (SQLException sqlException) {
