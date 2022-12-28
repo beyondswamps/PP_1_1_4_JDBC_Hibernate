@@ -3,7 +3,6 @@ package jm.task.core.jdbc.dao;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 
-import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,15 +14,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void createUsersTable() {
         try (Connection connection = Util.getInstance().getConnection()) {
-            PreparedStatement ps = connection.prepareStatement(
-                    """
-                                CREATE TABLE users ( 
-                                id INT UNIQUE AUTO_INCREMENT,
-                                name VARCHAR(30) NOT NULL,
-                                lastName VARCHAR(30) NOT NULL,
-                                age INT,
-                                PRIMARY KEY (id)
-                            """);
+            PreparedStatement ps = connection.prepareStatement("CREATE TABLE database.users (id INT NOT NULL AUTO_INCREMENT, name VARCHAR(30) NOT NULL, lastName VARCHAR(30) NOT NULL, age INT, PRIMARY KEY (id)");
             ps.executeUpdate();
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();

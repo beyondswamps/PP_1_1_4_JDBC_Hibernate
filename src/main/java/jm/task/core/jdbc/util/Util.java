@@ -1,13 +1,12 @@
 package jm.task.core.jdbc.util;
 
-import javax.swing.event.MouseInputListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Util {
     // реализуйте настройку соеденения с БД
-    private Util() {};
+    private Util() {}
 
     private static volatile Util instance;
     String url = "jdbc:mysql://localhost:3306/database";
@@ -33,7 +32,7 @@ public class Util {
             connection = DriverManager.getConnection(url, user, password);
         } catch (SQLException sqle) {
                 sqle.printStackTrace();
-        };
+        }
         return connection;
     }
 }
